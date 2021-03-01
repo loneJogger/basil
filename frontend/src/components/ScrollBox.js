@@ -15,6 +15,7 @@ const ScrollBox = (props) => {
     const canvas =  canvasRef.current
     const context = canvas.getContext('2d')
     draw(context, canvas)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frame])
 
   const getScrollHeight = (id) => {
@@ -28,17 +29,21 @@ const ScrollBox = (props) => {
     context.fillStyle = 'rgb(256, 256, 256)'
     context.fillRect(0,0, canvas.width, canvas.height)
     props.cells.forEach(cell => {
-      context.fillStyle = cell.color
-      const x = frame/24.631
-      const y = cell.m * x + cell.b/100 * canvas.height
-      context.fillRect(x, y, 15, 15)
+      const x = cell.startX + frame/24.631 * cell.speed
+      let y = 0
+      if (cell.gType === 'linear') {
+        y = cell.gDef.m * x + cell.gDef.b/100 * canvas.height
+      }
+      if (cell.range === null || (x >= cell.range.a && x <= cell.range.b)) {
+        context.drawImage(cell.imagePath, x, y)
+      }
     })
   }
 
   return (
     <Wrapper id={props.pid + '_wrap'}>
       <Scrollable id={props.pid}>
-        <img style={{opacity: '0'}} src='/images/long.png' />
+        <img style={{opacity: '0'}} src='/images/long.png' alt=''/>
       </Scrollable>
       <Interior id={props.pid + '_int'}>
         <canvas
