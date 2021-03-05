@@ -29,7 +29,7 @@ const ScrollBox = (props) => {
     context.fillStyle = 'rgb(256, 256, 256)'
     context.fillRect(0,0, canvas.width, canvas.height)
     props.cells.forEach(cell => {
-      const x = cell.startX + frame/24.631 * cell.speed
+      const x = cell.startX + frame/((props.scrollHeight - canvas.height)/canvas.height) * cell.speed
       let y = 0
       if (cell.gType === 'linear') {
         y = cell.gDef.m * x + cell.gDef.b/100 * canvas.height
@@ -43,7 +43,7 @@ const ScrollBox = (props) => {
   return (
     <Wrapper id={props.pid + '_wrap'}>
       <Scrollable id={props.pid}>
-        <img style={{opacity: '0'}} src='/images/long.png' alt=''/>
+        <img style={{opacity: '0'}} src={`/images/${props.scrollHeight}.png`} alt=''/>
       </Scrollable>
       <Interior id={props.pid + '_int'}>
         <canvas

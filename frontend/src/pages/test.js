@@ -19,7 +19,7 @@ const Test = (props) => {
     <div style={{textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
     <h1>Test</h1>
     <div style={{height: "300px", padding: "32px", width: "400px" }}>
-      <ScrollBox pid={'test01'} cells={cellSet02}/>
+      <ScrollBox pid={'test01'} cells={cellSet02} scrollHeight={10000}/>
     </div>
     </div>
   )
